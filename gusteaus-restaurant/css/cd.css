@@ -1,0 +1,47 @@
+
+.title1-class {
+    text-align: center;
+}
+
+.pad-class {
+    padding-top: 180px;
+    padding-bottom: 90px;
+}
+.pad2-class {
+    width: 300px;
+    margin: auto;
+}
+.results-class {
+    text-align: center;
+    border: solid 5px black;
+
+}
+
+/* CD SINGLE */ 
+
+.title {
+    font-weight: bold;
+    text-align: center;
+    padding: 32px;
+    font-size: 26px;
+}
+
+.title-a {
+    color: #000;
+    text-decoration: none;
+}
+
+.album-main {   
+    text-align: center;
+    border: 5px solid #000;
+}
+
+.songs {
+    margin: 0 auto;
+    padding: 32px;
+    font-size: 24px;
+}
+
+.lst {
+    padding: 15px;
+}
