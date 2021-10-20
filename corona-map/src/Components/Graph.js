@@ -3,28 +3,24 @@ import Chart from 'react-google-charts';
 import '../App.css';
 
 export default class Graph extends Component { 
+    constructor(){
+        super();
+
+    }
     render() {
         const [ width, height ] = [ 400, 300 ];
-        let { name, chartType } = this.props;
-        let chartData = [['Name', 'Numbers']]
-        for (let i = 0; i < name.length; i++) {
-            chartData.push([name, name[i]])
-        }
-        
+        let { name, chartType, data } = this.props;
 
         return (
             <div className="card">
                 <div className="name">{ name }</div>
                 <div className="graph">
-                    <Chart
+                    <Chart 
                     width={ width }
                     height={ height }
-                    chartType={ chartType }
+                    chartType={chartType}
                     loader={<div>Loading Chart</div>}
-                    data={[
-                        
-
-                    ]}
+                    data={ data }
                     options={{
                         title={ name },
                         chartArea: { width: '30%' },
