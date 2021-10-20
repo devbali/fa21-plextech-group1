@@ -6,13 +6,15 @@ import Graph from './Components/Graph'
 
 function App() {
   const [statsdata, setStatsData] = useState([])
-  const [statsname, setStatsName] = useState(['cases', 'deaths', 'recovered'])
-  
-  const [graphdata, setGraphData] = useState([])
-  const [graphname, setGraphName] = useState(['cases', 'deaths', 'recovered'])
-  
-  const getGlobalData = () => {
-    fetch("https://disease.sh/v3/covid-19/all", {
+  const [statsname] = useState(['cases', 'deaths', 'recovered'])
+
+  const [graphsdata, setGraphsData] = useState([])
+  const [graphsname] = useState(['cases', 'deaths'])
+
+  const [ready, setReady] = useState(null)
+
+  const fetchData = (url, fn) => {
+    fetch(url, {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -21,39 +23,20 @@ function App() {
     )
       .then(res => res.json())
       .then(function (data) {
-        setStatsData(data)
+        fn(data)
+        if(fn === setGraphsData) {
+          setReady(true)
+        }
       })
-  }
-
-  const getHistoricalData = (name) => {
-    dict = {}
-    fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=30', {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    }
-    )
-      .then(res => res.json())
-      .then(data => {
-        Object.keys(data[name]).map((key, i) => 
-        {
-          dict[key] = data["cases"][key]
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    return dict
   }
 
   useEffect(() => {
-    getGlobalData()
-    getHistoricalData()
+    fetchData("https://disease.sh/v3/covid-19/all", setStatsData)
+    fetchData("https://disease.sh/v3/covid-19/historical/all?lastdays=30", setGraphsData)
   }, [])
 
   return (
-    <div>
+    <div className="App">
       <section className="map">
         <Map />
       </section>
@@ -69,19 +52,24 @@ function App() {
           })
         }
       </section>
-      <section className="graph grid">
+      {
+        ready ? 
+        <section className="graphs grid">
         {
-          graphname.map((key) => {
-            return (
+          graphsname.map((key) => {
+            return(
               <Graph
-                name={key}
-                chartType={}
-                data={graphData[key]}
+              name={`Last 30 days: ${key}`}
+              data={graphsdata[key]}
+              chartType="LineChart"
               />
             )
           })
         }
-      </section>
+        </section>
+        :
+        <div>Fetching data...</div>
+      }
     </div>
   );
 }
