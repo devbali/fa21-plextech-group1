@@ -49,7 +49,7 @@ This is a partner project! You will both be keeping up with your own versions of
 
 ## Your Task
 
-You will be building a server that can keep track of tasks. Your server must be able to do the following:
+You will be building a server that can keep track of tasks. Your sersver must be able to do the following:
 
 1. Create a new task with a title property and a boolean determining whether the task has been completed. A new unique id would be created for each new task
 
